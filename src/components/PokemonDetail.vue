@@ -6,9 +6,13 @@
     <div><strong>Evoluciona de:</strong> {{ pokemon.evolves_from_species ? pokemon.evolves_from_species : 'Ninguno' }}</div>
     <div><strong>ID:</strong> {{ pokemon._id }}</div>
   </div>
+  <div>
+    <button @click="router.push({name: 'home'})">Volver</button>
+  </div>
 </template>
 
 <script setup>
+import router from '@/router';
 import { defineProps } from 'vue';
 const props = defineProps({
   pokemon: {

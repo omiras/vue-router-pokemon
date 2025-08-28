@@ -8,6 +8,7 @@
       </div>
     </div>
   </div>
+  <button>Cargar más </button>
 </template>
 
 <script setup>
@@ -16,7 +17,10 @@ import { useRouter } from 'vue-router';
 
 const pokemons = ref([]);
 const loading = ref(true);
+
+// useRouter crea un objeto que nos permite navegar de foram dinámica por las rutas : /pokemon/1 , /pokemon/2, etc.
 const router = useRouter();
+
 
 const goToDetail = (id) => {
   // El haber puesto nombre a la ruta, permite hacer esta navegación dinámica en vez de poner manualmente /pokemon/1
@@ -27,7 +31,7 @@ onMounted(async () => {
   try {
     const response = await fetch('https://pokemon-server-3a2p.onrender.com/api/pokemons');
     const data = await response.json();
-    pokemons.value = data.slice(0, 20);
+    pokemons.value = data.slice(0, 40 );
   } catch (error) {
     console.error(error);
   } finally {

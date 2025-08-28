@@ -1,23 +1,19 @@
 <template>
   <div>
+    <!-- Pasamos todo el objeto como propiedad -->
     <PokemonDetail :pokemon="pokemon" v-if="pokemon" />
     <div v-else>Cargando...</div>
-    <button @click="goBack" style="margin: 16px 0;">Volver</button>
   </div>
 </template>
 
 <script setup>
 import { ref, onMounted } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
+import { useRoute } from 'vue-router';
 import PokemonDetail from '../components/PokemonDetail.vue';
 
+// useRoute se usa para saber cual es la parte dinámica de la ruta que esgtamos visitando (entre otras funcionalidades)
 const route = useRoute();
-const router = useRouter();
 const pokemon = ref(null);
-
-const goBack = () => {
-  router.back();
-};
 
 onMounted(async () => {
   try {
