@@ -3,7 +3,7 @@
     <h2>{{ pokemon.name }}</h2>
     <img :src="pokemon.sprite" :alt="pokemon.name" />
     <div><strong>Tipo:</strong> {{ pokemon.type.join(', ') }}</div>
-    <div><strong>Evoluciona de:</strong> {{ pokemon.evolves_from_species ? pokemon.evolves_from_species : 'Ninguno' }}</div>
+    <div v-if="pokemon.evolves_from_species"><strong>Evoluciona de:</strong> {{ pokemon.evolves_from_species }}</div>
     <div><strong>ID:</strong> {{ pokemon._id }}</div>
   </div>
   <div>
