@@ -10,40 +10,30 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 
-export default {
-  name: 'PokemonList',
-  setup() {
-    const pokemons = ref([]);
-    const loading = ref(true);
-    const router = useRouter();
+const pokemons = ref([]);
+const loading = ref(true);
+const router = useRouter();
 
-    const goToDetail = (id) => {
-      router.push({ name: 'pokemon-detail', params: { id } });
-    };
-
-    onMounted(async () => {
-      try {
-        const response = await fetch('https://pokemon-server-3a2p.onrender.com/api/pokemons');
-        const data = await response.json();
-        pokemons.value = data.slice(0, 20);
-      } catch (error) {
-        console.error(error);
-      } finally {
-        loading.value = false;
-      }
-    });
-
-    return {
-      pokemons,
-      loading,
-      goToDetail
-    };
-  }
+const goToDetail = (id) => {
+  // El haber puesto nombre a la ruta, permite hacer esta navegación dinámica en vez de poner manualmente /pokemon/1
+  router.push({ name: 'pokemon-detail', params: { id } });
 };
+
+onMounted(async () => {
+  try {
+    const response = await fetch('https://pokemon-server-3a2p.onrender.com/api/pokemons');
+    const data = await response.json();
+    pokemons.value = data.slice(0, 20);
+  } catch (error) {
+    console.error(error);
+  } finally {
+    loading.value = false;
+  }
+});
 </script>
 
 <style scoped>
