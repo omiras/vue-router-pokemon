@@ -1,16 +1,10 @@
 <template>
   <div>
     <div v-if="loading">Loading...</div>
-    <div v-else>
-      <div v-if="selectedPokemon">
-        <PokemonDetail :pokemon="selectedPokemon" />
-        <button @click="selectedPokemon = null" style="margin: 16px 0;">Volver</button>
-      </div>
-      <div v-else class="pokemon-list">
-        <div v-for="pokemon in pokemons" :key="pokemon.name" class="pokemon-item" @click="selectPokemon(pokemon)" style="cursor:pointer;">
-          <img :src="pokemon.sprite" :alt="pokemon.name" />
-          <div>{{ pokemon.name }}</div>
-        </div>
+    <div v-else class="pokemon-list">
+      <div v-for="pokemon in pokemons" :key="pokemon.name" class="pokemon-item" @click="goToDetail(pokemon._id)" style="cursor:pointer;">
+        <img :src="pokemon.sprite" :alt="pokemon.name" />
+        <div>{{ pokemon.name }}</div>
       </div>
     </div>
   </div>
@@ -18,18 +12,17 @@
 
 <script>
 import { ref, onMounted } from 'vue';
-import PokemonDetail from './PokemonDetail.vue';
+import { useRouter } from 'vue-router';
 
 export default {
   name: 'PokemonList',
-  components: { PokemonDetail },
   setup() {
     const pokemons = ref([]);
     const loading = ref(true);
-    const selectedPokemon = ref(null);
+    const router = useRouter();
 
-    const selectPokemon = (pokemon) => {
-      selectedPokemon.value = pokemon;
+    const goToDetail = (id) => {
+      router.push({ name: 'pokemon-detail', params: { id } });
     };
 
     onMounted(async () => {
@@ -47,8 +40,7 @@ export default {
     return {
       pokemons,
       loading,
-      selectedPokemon,
-      selectPokemon
+      goToDetail
     };
   }
 };
